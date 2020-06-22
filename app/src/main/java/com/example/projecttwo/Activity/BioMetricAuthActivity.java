@@ -61,7 +61,7 @@ public class BioMetricAuthActivity extends AppCompatActivity {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(BioMetricAuthActivity.this,"Authentication success", Toast.LENGTH_SHORT).show();
                 authState.setText("Authendication Success");
-                startActivity(new Intent(BioMetricAuthActivity.this, RoomDaoActivity.class));
+                startActivity(new Intent(BioMetricAuthActivity.this, MainActivity.class));
                 finish();
             }
 
@@ -87,7 +87,7 @@ public class BioMetricAuthActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BioMetricAuthActivity.this,RoomDaoActivity.class));
+                startActivity(new Intent(BioMetricAuthActivity.this,MainActivity.class));
             }
         });
     }

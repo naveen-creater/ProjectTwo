@@ -50,60 +50,31 @@ public class ContactsProviderActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[] {READ_CONTACTS}, RequestPermissionCode);
         }
 
-        listView = (ListView)findViewById(R.id.listview1);
 
-        button = (Button)findViewById(R.id.button1);
 
-        StoreContacts = new ArrayList<String>();
 
         EnableRuntimePermission();
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                GetContactsIntoArrayList();
-
-                arrayAdapter = new ArrayAdapter<String>(ContactsProviderActivity.this, R.layout.contact_detail, R.id.namez, StoreContacts
-                );
-
-                listView.setAdapter(arrayAdapter);
-
-
-            }
-        });
 
 
     }
     public void GetContactsIntoArrayList(){
-
         cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null, null, null);
-
         while (cursor.moveToNext()) {
-
             name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-
             phonenumber = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
             StoreContacts.add(name + " "  + ":" + "\n" + phonenumber);
         }
 
         cursor.close();
-
     }
 
     public void EnableRuntimePermission(){
-
         if (ActivityCompat.shouldShowRequestPermissionRationale(
                 ContactsProviderActivity.this, Manifest.permission.READ_CONTACTS))
         {
-
             Toast.makeText(ContactsProviderActivity.this,"CONTACTS permission allows us to Access CONTACTS app", Toast.LENGTH_LONG).show();
-
         } else {
-
             ActivityCompat.requestPermissions(ContactsProviderActivity.this,new String[]{Manifest.permission.READ_CONTACTS}, RequestPermissionCode);
-
         }
     }
 
@@ -111,13 +82,9 @@ public class ContactsProviderActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int RC, String per[], int[] PResult) {
 
         switch (RC) {
-
             case RequestPermissionCode:
-
                 if (PResult.length > 0 && PResult[0] == PackageManager.PERMISSION_GRANTED) {
-
                     Toast.makeText(ContactsProviderActivity.this,"Permission Granted, Now your application can access CONTACTS.", Toast.LENGTH_LONG).show();
-
                 } else {
 
                     Toast.makeText(ContactsProviderActivity.this,"Permission Canceled, Now your application cannot access CONTACTS.", Toast.LENGTH_LONG).show();
@@ -128,43 +95,23 @@ public class ContactsProviderActivity extends AppCompatActivity {
     }
 
     private void listeners() {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                GetContactsIntoArrayList();
+                arrayAdapter = new ArrayAdapter<String>(ContactsProviderActivity.this, R.layout.contact_detail, R.id.namez, StoreContacts
+                );
+                listView.setAdapter(arrayAdapter);
+            }
+        });
     }
 
     private void initView() {
+        StoreContacts = new ArrayList<String>();
+        listView = (ListView)findViewById(R.id.listview1);
+        button = (Button)findViewById(R.id.button1);
 
     }
-    private void getContactList() {
-        ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
 
-        if ((cur != null ? cur.getCount() : 0) > 0) {
-            while (cur != null && cur.moveToNext()) {
-                String id = cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(
-                        ContactsContract.Contacts.DISPLAY_NAME));
-
-                if (cur.getInt(cur.getColumnIndex(
-                        ContactsContract.Contacts.HAS_PHONE_NUMBER)) > 0) {
-                    Cursor pCur = cr.query(
-                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null);
-                    while (pCur.moveToNext()) {
-                        String phoneNo = pCur.getString(pCur.getColumnIndex(
-                                ContactsContract.CommonDataKinds.Phone.NUMBER));
-//                        Log.i(TAG, "Name: " + name);
-//                        Log.i(TAG, "Phone Number: " + phoneNo);
-                    }
-                    pCur.close();
-                }
-            }
-        }
-        if(cur!=null){
-            cur.close();
-        }
-    }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activity.ContactsProviderActivity"
-    android:background="#FFF9C4"
+    android:background="#E3DFC1"
     android:padding="4dp">
 
     <ListView
@@ -19,6 +19,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/button1"
-        android:text="Click Here to load Contacts" />
+        android:text="load Contacts" />
 
 </RelativeLayout>
